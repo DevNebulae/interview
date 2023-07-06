@@ -12,8 +12,10 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
+    implementation("org.apache.logging.log4j:log4j-core:2.19.0")
+    implementation("org.apache.httpcomponents.core5:httpcore5:5.2.2")
 
+    testImplementation(kotlin("test"))
     testImplementation("com.github.tomakehurst:wiremock-jre8:2.35.0")
 }
 
