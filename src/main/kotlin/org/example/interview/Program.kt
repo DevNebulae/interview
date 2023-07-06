@@ -10,12 +10,7 @@ class Program(private val repository: PINTerminalRepository) {
         logger.info("Activating PIN terminal with MAC address '$macAddress' for customer with ID '$customerId'")
         return when (repository.activate(customerId, macAddress)) {
             PINTerminalResult.Activated -> Status.Active
-            PINTerminalResult.NotFound -> {
-                Status.Inactive
-            }
-            PINTerminalResult.Conflict -> {
-                Status.Inactive
-            }
+            PINTerminalResult.NotFound, PINTerminalResult.Conflict -> Status.Inactive
         }
     }
 
