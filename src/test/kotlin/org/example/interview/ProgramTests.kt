@@ -6,6 +6,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.post
 import com.github.tomakehurst.wiremock.client.WireMock.stubFor
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
+import org.example.interview.infrastructure.PINTerminalRepositoryImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.net.URI
@@ -21,8 +22,9 @@ class ProgramTests {
         stubFor(post("/activate").willReturn(ok()))
 
         val httpClient = HttpClient.newHttpClient()
-        val uri = URI(wireMockRuntimeInfo.httpBaseUrl)
-        val program = Program(httpClient, uri)
+        val baseUri = URI(wireMockRuntimeInfo.httpBaseUrl)
+        val repository = PINTerminalRepositoryImpl(httpClient, baseUri)
+        val program = Program(repository)
 
         // Act
         val result = program.enablePinTerminal("12345", "AA:BB:CC:DD:EE:FF")
@@ -39,8 +41,9 @@ class ProgramTests {
         stubFor(post("/activate").willReturn(notFound()))
 
         val httpClient = HttpClient.newHttpClient()
-        val uri = URI(wireMockRuntimeInfo.httpBaseUrl)
-        val program = Program(httpClient, uri)
+        val baseUri = URI(wireMockRuntimeInfo.httpBaseUrl)
+        val repository = PINTerminalRepositoryImpl(httpClient, baseUri)
+        val program = Program(repository)
 
         // Act
         val result = program.enablePinTerminal("12345", "AA:BB:CC:DD:EE:AA")
@@ -57,8 +60,9 @@ class ProgramTests {
         stubFor(post("/activate").willReturn(notFound()))
 
         val httpClient = HttpClient.newHttpClient()
-        val uri = URI(wireMockRuntimeInfo.httpBaseUrl)
-        val program = Program(httpClient, uri)
+        val baseUri = URI(wireMockRuntimeInfo.httpBaseUrl)
+        val repository = PINTerminalRepositoryImpl(httpClient, baseUri)
+        val program = Program(repository)
 
         // Act
         val result = program.enablePinTerminal("11111", "AA:BB:CC:DD:EE:FF")
