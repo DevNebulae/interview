@@ -1,2 +1,6 @@
-package org.example.interview 
+package org.example.interview
 
+enum class Status {
+    Active,
+    Inactive;
+}
